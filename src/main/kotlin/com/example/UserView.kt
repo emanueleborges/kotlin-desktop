@@ -78,7 +78,7 @@ class UserView : View("Gerenciamento de Usuários") {
             padding = Insets(10.0)
 
             hbox(10.0) {
-                label("Usuários") {
+                label("Lista de Usuários") {
                     style = "-fx-font-size: 16px; -fx-font-weight: bold"
                 }
                 region { hgrow = Priority.ALWAYS }
@@ -109,7 +109,8 @@ class UserView : View("Gerenciamento de Usuários") {
                 }
 
                 vgrow = Priority.ALWAYS
-                columnResizePolicy = SmartResize.POLICY
+                columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
+
             }
         }
     }

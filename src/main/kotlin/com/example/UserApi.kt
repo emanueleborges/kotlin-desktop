@@ -7,16 +7,16 @@ import retrofit2.http.*
  * API interface for User CRUD operations
  */
 interface UserApi {
-    @GET("users")
+    @GET("/api/v1/users")
     fun getAllUsers(): Call<List<User>>
     
-    @GET("users/{id}")
+    @GET("/api/v1/users/{id}")
     fun getUserById(@Path("id") id: Long): Call<User>
     
-    @POST("users")
+    @POST("/api/v1/users")
     fun createUser(@Body user: UserCreateRequest): Call<User>
     
-    @PUT("users/{id}")
+    @PUT("/api/v1/users/{id}")
     fun updateUser(@Path("id") id: Long, @Body user: UserUpdateRequest): Call<User>
     
     @DELETE("users/{id}")
