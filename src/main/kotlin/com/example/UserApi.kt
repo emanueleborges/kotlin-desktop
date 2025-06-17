@@ -19,10 +19,6 @@ interface UserApi {
     @PUT("/api/v1/users/{id}")
     fun updateUser(@Path("id") id: Long, @Body user: UserUpdateRequest): Call<User>
     
-    @DELETE("users/{id}")
+    @DELETE("/api/v1/users/{id}")
     fun deleteUser(@Path("id") id: Long): Call<Void>
 }
-
-data class UserCreateRequest(val name: String)
-
-data class UserUpdateRequest(val name: String)

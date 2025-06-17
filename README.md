@@ -1,12 +1,21 @@
 # Kotlin Desktop CRUD Application
 
-Este é um aplicativo desktop em Kotlin que se conecta ao backend CRUD para gerenciar usuários.
+Um moderno aplicativo desktop em Kotlin que demonstra operações CRUD de usuários usando Jetpack Compose for Desktop e se conecta a um backend REST.
+
+## Tecnologias Utilizadas
+
+- **Kotlin** - Linguagem de programação
+- **Jetpack Compose for Desktop** - Framework UI moderno e declarativo
+- **Retrofit** - Cliente HTTP para comunicação com o backend
+- **Jackson** - Processamento de JSON
+- **Gradle** - Sistema de build
 
 ## Requisitos
 
 - JDK 17 ou superior
-- Gradle
-- O backend Kotlin rodando na porta 8080
+- Gradle 7.4+ (incluído via wrapper)
+- Conexão com a internet para download das dependências
+- O backend REST rodando na porta 8080
 
 ## Como executar
 
@@ -14,22 +23,70 @@ Este é um aplicativo desktop em Kotlin que se conecta ao backend CRUD para gere
 2. Execute o aplicativo com o seguinte comando:
 
 ```bash
+# No Windows
+.\gradlew.bat run
+
+# No Linux/macOS
 ./gradlew run
 ```
 
-## Recursos
+## Clonando o Repositório
 
-- Interface gráfica com JavaFX usando TornadoFX
-- CRUD completo de usuários
-- Comunicação com o backend via Retrofit
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/kotlin-desktop.git
+
+# Entre no diretório do projeto
+cd kotlin-desktop
+```
+
+## Funcionalidades
+
+- Listagem de usuários com paginação (5 registros por página)
+- Criação de novos usuários
+- Atualização de usuários existentes
+- Exclusão de usuários
+- Validação de formulários
+- Interface moderna e responsiva
 
 ## Estrutura do Projeto
 
-- `Main.kt` - Ponto de entrada da aplicação
-- `UserView.kt` - Interface gráfica principal
-- `UserController.kt` - Lógica de negócios e comunicação com a API
-- `UserModel.kt` - Modelo de dados para a interface
-- `User.kt` - Classe de modelo
-- `UserApi.kt` - Interface para a API REST
-- `ApiService.kt` - Configuração do cliente Retrofit
-- `Styles.kt` - Estilos CSS para a interface
+```
+kotlin-desktop/
+├── build.gradle.kts      # Configuração do Gradle e dependências
+├── src/
+│   └── main/
+│       ├── kotlin/
+│       │   └── com/
+│       │       └── example/
+│       │           ├── Main.kt           # Ponto de entrada e UI principal
+│       │           ├── User.kt           # Modelo de dados
+│       │           ├── UserDto.kt        # DTOs para comunicação com a API
+│       │           ├── UserApi.kt        # Interface da API REST
+│       │           └── ApiService.kt     # Configuração do Retrofit
+│       └── resources/                    # Recursos da aplicação
+└── gradle/                               # Arquivos do wrapper Gradle
+```
+
+## Comunicação com o Backend
+
+O aplicativo se comunica com um backend REST que deve estar rodando na URL `http://localhost:8080/api/`. 
+A API espera e retorna objetos JSON com as seguintes operações:
+
+- `GET /api/v1/users` - Obtém todos os usuários
+- `GET /api/v1/users/{id}` - Obtém um usuário específico
+- `POST /api/v1/users` - Cria um novo usuário
+- `PUT /api/v1/users/{id}` - Atualiza um usuário existente
+- `DELETE /api/v1/users/{id}` - Remove um usuário
+
+## Personalização
+
+Para alterar a URL do backend, edite a constante `baseUrl` no arquivo `ApiService.kt`.
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
