@@ -41,7 +41,7 @@ fun App() {
             Row(modifier = Modifier.fillMaxSize()) {
                 // Form panel
                 Card(
-                    modifier = Modifier.width(320.dp).fillMaxHeight().padding(16.dp),
+                    modifier = Modifier.width(400.dp).fillMaxHeight().padding(16.dp),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Column(
