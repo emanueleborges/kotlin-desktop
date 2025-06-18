@@ -22,13 +22,18 @@ Um moderno aplicativo desktop em Kotlin que demonstra operações CRUD de usuár
 1. Certifique-se de que o backend esteja rodando
 2. Execute o aplicativo com o seguinte comando:
 
+
+```bash
+# No Windows
+.\gradlew.bat build
+
+
+./gradlew build
 ```bash
 # No Windows
 .\gradlew.bat run
 
-# No Linux/macOS
-./gradlew run
-```
+
 
 ## Clonando o Repositório
 

@@ -25,6 +25,7 @@ fun App() {
     var users by remember { mutableStateOf<List<User>>(emptyList()) }
     var selectedUser by remember { mutableStateOf<User?>(null) }
     var nameField by remember { mutableStateOf("") }
+    var searchQuery by remember { mutableStateOf("") }
     // Paginação
     var currentPage by remember { mutableStateOf(0) }
     val pageSize = 5
@@ -103,7 +104,8 @@ fun App() {
                                                         UserUpdateRequest(nameField)
                                                     ).execute()
                                                 }
-                                                if (response.isSuccessful) {                                                    response.body()?.let {
+                                                if (response.isSuccessful) {                                                    
+                                                    response.body()?.let {
                                                         val index = users.indexOfFirst { u -> u.id == it.id }
                                                         if (index >= 0) {
                                                             val newList = users.toMutableList()
@@ -142,7 +144,8 @@ fun App() {
                                 onClick = {
                                     selectedUser?.let { user ->
                                         coroutineScope.launch {
-                                            try {                                                val response = withContext(Dispatchers.IO) {
+                                            try {                                                
+                                                val response = withContext(Dispatchers.IO) {
                                                     userApi.deleteUser(user.id).execute()
                                                 }
                                                 
@@ -191,24 +194,67 @@ fun App() {
                             fontWeight = FontWeight.Bold
                         )
                         
-                        Button(
-                            onClick = {
-                                coroutineScope.launch {
-                                    try {
-                                        val response = withContext(Dispatchers.IO) {
-                                            userApi.getAllUsers().execute()
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedTextField(
+                                value = searchQuery,
+                                onValueChange = { searchQuery = it },
+                                label = { Text("Buscar por nome") },
+                                singleLine = true,
+                                modifier = Modifier.width(200.dp)
+                            )
+                            
+                            Button(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        try {
+                                            val response = if (searchQuery.isBlank()) {
+                                                withContext(Dispatchers.IO) {
+                                                    userApi.getAllUsers().execute()
+                                                }
+                                            } else {
+                                                withContext(Dispatchers.IO) {
+                                                    userApi.searchUsersByName(searchQuery).execute()
+                                                }
+                                            }
+                                            
+                                            if (response.isSuccessful) {
+                                                users = response.body() ?: emptyList()
+                                                currentPage = 0
+                                            }
+                                        } catch (e: Exception) {
+                                            println("Error searching users: ${e.message}")
                                         }
-                                        if (response.isSuccessful) {
-                                            users = response.body() ?: emptyList()
-                                            currentPage = 0
-                                        }
-                                    } catch (e: Exception) {
-                                        println("Error loading users: ${e.message}")
                                     }
                                 }
+                            ) {
+                                Text("Buscar")
                             }
-                        ) {
-                            Text("Atualizar")
+                            
+                            Spacer(modifier = Modifier.width(8.dp))
+                            
+                            Button(
+                                onClick = {
+                                    searchQuery = ""
+                                    coroutineScope.launch {
+                                        try {
+                                            val response = withContext(Dispatchers.IO) {
+                                                userApi.getAllUsers().execute()
+                                            }
+                                            if (response.isSuccessful) {
+                                                users = response.body() ?: emptyList()
+                                                currentPage = 0
+                                            }
+                                        } catch (e: Exception) {
+                                            println("Error loading users: ${e.message}")
+                                        }
+                                    }
+                                }
+                            ) {
+                                Text("Limpar")
+                            }
                         }
                     }
                       Card(

@@ -13,6 +13,9 @@ interface UserApi {
     @GET("/api/v1/users/{id}")
     fun getUserById(@Path("id") id: Long): Call<User>
     
+    @GET("/api/v1/users/search")
+    fun searchUsersByName(@Query("name") name: String): Call<List<User>>
+    
     @POST("/api/v1/users")
     fun createUser(@Body user: UserCreateRequest): Call<User>
     
